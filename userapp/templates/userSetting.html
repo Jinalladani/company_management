@@ -1,0 +1,151 @@
+{% extends 'bash.html' %}
+{% load static %}
+{% block content %}
+<link
+        href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<style>
+.home-content .sales-boxes .recent-sales{
+  width: 100%;
+  background: #fff;
+  padding: 20px 30px;
+  margin: 0 20px;
+  border-radius: 12px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+
+</style>
+<section class="home-section">
+    <nav>
+        <div class="sidebar-button">
+            <i class='bx bx-menu sidebarBtn'></i>
+            <span class="dashboard">SETTING</span>
+        </div>
+        <div class="search-box">
+            <input type="text" placeholder="Search...">
+            <i class='bx bx-search'></i>
+        </div>
+        <div class="profile-details">
+            <i class="fa fa-user" aria-hidden="true" style="margin-left:40px;"></i>
+            <form action="{% url 'adminlogout' %}" method="post" id="my_form">
+            {% csrf_token %}
+            <button type="submit" ></button>
+            <a href="javascript:{}" onclick="document.getElementById('my_form').submit();"style="margin-left:10px; text-decoration:none;"> Logout </a>
+-
+            </form>
+        </div>
+    </nav>
+    <div class="home-content">
+        <div class="sales-boxes">
+            <div class="recent-sales box">
+                <div class="sales-details">
+                    <form class="post-form" method="post" action="{% url 'userSetting' %}">
+                        {% csrf_token %}
+                        <div class="table-responsive">
+                            <table id="bootstrapdatatable" style="width:100%"
+                                   class="table table-striped table-bordered" width="100%">
+                        <div class="container">
+                            <br>
+                            <div class="form-group row">
+                                <div class="form-group row">
+                                    <div class="col-sm-1">
+
+                                        <input type="checkbox" class="form-control" name="emailService"
+                                               id="category_name" {% if notiList.emailService %} checked="checked" {% endif %}>
+                                    </div>
+                                    <label class="col-sm-2 col-form-label" name="email" style="margin:10px 0 0 -30px" >Email Service</label>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-sm-1">
+                                        <input type="checkbox" class="form-control" name="smsService"
+                                               id="category_name"  {% if notiList.smsService %} checked="checked"  {% endif %}>
+
+                                    </div>
+                                    <label class="col-sm-2 col-form-label" name="email" style="margin:10px 0 0 -30px" >SMS Service</label>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-sm-1">
+                                        <input type="checkbox" class="form-control" name="fcmService"
+                                               id="category_name"  {% if notiList.fcmService %} checked="checked" {% endif %}>
+
+                                    </div>
+                                    <label class="col-sm-2 col-form-label" name="email" style="margin:10px 0 0 -30px" >App Notification</label>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-sm-1">
+                                        <input type="checkbox" class="form-control" name="voiceNotiService"
+                                               id="category_name"  {% if notiList.voiceNotiService %} checked="checked" \ {% endif %}>
+                                    </div>
+                                    <label class="col-sm-2 col-form-label" name="email" style="margin:10px 0 0 -30px" >Voice Call notification </label>
+                                </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Save Setting
+                           </form>
+<!--                             <hr> -->
+<!--                              <form method="POST" class="post-form" action=""> -->
+<!--                                 {% csrf_token %} -->
+<!--                             <div class="form-group row"> -->
+<!--                                  <label class="col-sm-2 col-form-label">Set Defult Time</label> -->
+<!--                                     <div class="col-sm-2"> -->
+<!--                                         <input type="time" class="form-control"> -->
+<!--                                     </div> -->
+<!--                                     <button class="btn btn-primary">Save Setting</button> -->
+<!--                             </div> -->
+<!--                             </form> -->
+<!--                             <hr> -->
+<!--                              <form method="POST" class="post-form" action=""> -->
+<!--                                             {% csrf_token %} -->
+<!--                              <span><a href="{% url 'addConsultantClient' %}" -->
+<!--                                                                        class="btn btn-primary">Add Send Mail Days</a></span> -->
+<!--                                 <hr> -->
+<!--                                 <table id="bootstrapdatatable" style="width:100%" -->
+<!--                                    class="table table-striped table-bordered" width="100%"> -->
+<!--                                     <thead> -->
+<!--                                 <th>Days</th> -->
+<!--                                     </thead> -->
+<!--                                  </table> -->
+<!--                                <div class="form-group row"> -->
+<!--                                  <label class="col-sm-2 col-form-label">Add Days</label> -->
+<!--                                     <div class="col-sm-2"> -->
+<!--                                         <input type="text" class="form-control" name="addDays"> -->
+<!--                                     </div> -->
+<!--                                     <button class="btn btn-primary">Save Setting</button> -->
+<!--                             </div> -->
+<!--                         </div> -->
+<!--                     </form> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+
+<script>
+$(document).ready(function(){
+    $('#updateCheckbox').click(function(){
+        if(confirm("Are you sure you want to Change ?")){
+            var id = [];
+            var csrf=$('input[name=csrfmiddlewaretoken').val();
+            console.log(csrf)
+                   console.log(csrf)
+                    $.ajax({
+                        url:"",
+                        method:"POST",
+                        data:{
+                            id,
+                            csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                        },
+                        success:function(response){
+                            alert("Successfully")
+                            windows.reload();
+                        }
+                    })
+            }
+        })
+    })
+
+</script>
+{% endblock %}
+

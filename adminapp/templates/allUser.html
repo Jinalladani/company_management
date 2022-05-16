@@ -1,0 +1,87 @@
+{% extends 'adminbash.html' %}
+{% load static %}
+{% block content %}
+<link
+        href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<style>
+.home-content .sales-boxes .recent-sales{
+  width: 129%;
+  background: #fff;
+  padding: 20px 30px;
+  margin: 0 20px;
+  border-radius: 12px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+
+</style>
+<section class="home-section">
+    <nav>
+        <div class="sidebar-button">
+            <i class='bx bx-menu sidebarBtn'></i>
+            <span class="dashboard">USER</span>
+        </div>
+        <div class="search-box">
+            <input type="text" placeholder="Search...">
+            <i class='bx bx-search'></i>
+        </div>
+        <div class="profile-details">
+            <i class="fa fa-user" aria-hidden="true" style="margin-left:40px;"></i>
+            <form action="{% url 'adminlogout' %}" method="post" id="my_form">
+            {% csrf_token %}
+            <button type="submit" ></button>
+            <a href="javascript:{}" onclick="document.getElementById('my_form').submit();"style="margin-left:10px; text-decoration:none;"> Logout </a>
+
+            </form>
+        </div>
+    </nav>
+    <div class="home-content">
+    <div class="sales-boxes">
+        <div class="recent-sales box">
+            <div class="title">User List</div>
+            <div class="sales-details">
+                <form method="post" enctype="multipart/form-data" >
+                    {% csrf_token %}
+                    <div class="table-responsive">
+
+                        <table id="bootstrapdatatable" style="width:100%"
+                               class="table table-striped table-bordered" width="100%">
+
+                            <hr>
+
+                                <thead>
+                                    <th>Mobile Number</th>
+                                    <th>Imei</th>
+                                    <th style="width:20px">Fcmtocken</th>
+                                    <th>Notifaction</th>
+
+                                 </thead>
+                                 {% csrf_token %}
+                                 {% for sl in userList %}
+                                 <tr>
+                                     <td>{{sl.mobileNumber}}</td>
+                                     <td>{% if sl.imei is None%}{% else %}{{sl.imei}}{% endif %}</td>
+                                     <td>{% if sl.fcmtocken is None%}
+                                     <a class="btn btn-primary" name="active"
+                                                          href="addIphoneUser/{{sl.id}}">
+                                            Add FCM</a>
+                                     {% else %}
+                                     {{sl.fcmtocken}}
+                                     {% endif %}</td>
+
+                                        <td align="center"><a class="btn btn-success" name="active"
+                                                          href="sendFCM/{{sl.id}}">
+                                            Send FCM</a></td>
+
+                                 </tr>
+                                 {% endfor %}
+                            </table>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+{% endblock %}
